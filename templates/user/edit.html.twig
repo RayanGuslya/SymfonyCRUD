@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Редактирование пользователя{% endblock %}
+
+{% block body %}
+    <h1>Редактирование пользователя</h1>
+
+    <form method="POST" action="{{ path('edit_user', {'user': user.id}) }}">
+        <label for="firstName">Имя:</label><br>
+        <input type="text" id="firstName" name="firstName" value="{{ user.firstName }}" required><br><br>
+
+        <label for="lastName">Фамилия:</label><br>
+        <input type="text" id="lastName" name="lastName" value="{{ user.lastName }}" required><br><br>
+
+        <label for="age">Возраст:</label><br>
+        <input type="number" id="age" name="age" value="{{ user.age }}" required><br><br>
+
+        <label for="status">Статус:</label><br>
+        <input type="text" id="status" name="status" value="{{ user.status }}" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="{{ user.email }}" required><br><br>
+
+        <label for="telegram">Telegram:</label><br>
+        <input type="text" id="telegram" name="telegram" value="{{ user.telegram }}" required><br><br>
+
+        <label for="address">Адрес:</label><br>
+        <input type="text" id="address" name="address" value="{{ user.address }}" required><br><br>
+
+        <label for="department">Отдел:</label><br>
+        <select name="department" id="department">
+        {% for department in departments %}
+            <option value="{{ department.id }}" {{ user.department and user.department.id == department.id ? 'selected' : '' }}>
+                {{ department.name }}
+            </option>
+        {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <a href="{{ path('app_user') }}">Назад к таблице</a>
+{% endblock %}

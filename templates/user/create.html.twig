@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Создание пользователей{% endblock %}
+
+{% block body %}
+
+<form action="{{ path('create_user') }}" method="POST">
+    <label for="firstName">Имя:</label><br>
+    <input type="text" name="firstName"><br><br>
+
+    <label for="lastName">Фамилия:</label><br>
+    <input type="text" name="lastName"><br><br>
+    
+    <label for="age">Возраст:</label><br>
+    <input type="number" name="age"><br><br>
+
+    <label for="status">Статус:</label><br>
+    <input type="text" name="status"><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" name="email"><br><br>
+
+    <label for="telegram">Telegram:</label><br>
+    <input type="text" name="telegram"><br><br>
+
+    <label for="address">Адрес:</label><br>
+    <input type="text" name="address"><br><br>
+
+    <label for="department">Отдел:</label><br>
+    <select name="department" id="department">
+    {% for department in departments %}
+        <option value="{{ department.id }}">{{ department.name }}</option>
+    {% endfor %}
+    </select><br><br>
+
+    <input type="submit" value="Создать"></br>
+</form>   
+
+
+<a href="{{ path('app_user') }}">Назад к таблице</a>
+
+{% endblock %}

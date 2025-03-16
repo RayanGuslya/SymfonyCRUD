@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block body %}
+<h1>Список пользователей</h1>
+    <table border="1" cellpadding="10" cellspacing="0">
+
+<form action="{{ path('app_user') }}" method="GET">
+    <input type="text" name="search" placeholder="Поиск по ФИО или email" value="{{ search }}">
+    <label for="searchDepartment">Отдел:</label>
+    <select name="searchDepartment" id="searchDepartment">
+        <option value="">Все отделы</option>
+        {% for department in departments %}
+            <option value="{{ department.id }}" {{ searchDepartment == department.id ? 'selected' : '' }}>
+                {{ department.name }}
+            </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Поиск">
+</form>
+        
+        <thead>
+            <tr>
+                <th>               
+                <a href="{{ path('app_user', {'sort': 'id', 'direction': (sort == 'id' and direction == 'ASC') ? 'DESC' : 'ASC'}) }}">
+                ID
+                    {% if sort == 'id' %}
+                        {{direction == 'ASC' ? '↑' : '↓'}}
+                    {% endif %}
+                </a>
+                </th>
+                <th>
+                <a href="{{ path('app_user', {'sort': 'first_name', 'direction': (sort == 'first_name' and direction == 'ASC') ? 'DESC' : 'ASC'}) }}">
+                Имя
+                    {% if sort == 'first_name' %}
+                        {{direction == 'ASC' ? '↑' : '↓'}}
+                    {% endif %}
+                </a>
+                </th>
+                <th>
+                <a href="{{ path('app_user', {'sort': 'last_name', 'direction': (sort == 'last_name' and direction == 'ASC') ? 'DESC' : 'ASC'}) }}">
+                Фамилия
+                    {% if sort == 'last_name' %}
+                        {{direction == 'ASC' ? '↑' : '↓'}}
+                    {% endif %}
+                </a>
+                </th>
+                <th>
+                <a href="{{ path('app_user', {'sort': 'age', 'direction': (sort == 'age' and direction == 'ASC') ? 'DESC' : 'ASC'}) }}">
+                Возраст
+                    {% if sort == 'age' %}
+                        {{direction == 'ASC' ? '↑' : '↓'}}
+                    {% endif %}
+                </a>
+                </th>
+                <th>
+                <a href="{{ path('app_user', {'sort': 'status', 'direction': (sort == 'status' and direction == 'ASC') ? 'DESC' : 'ASC'}) }}">
+                Статус
+                    {% if sort == 'status' %}
+                        {{direction == 'ASC' ? '↑' : '↓'}}
+                    {% endif %}
+                </a>
+                </th>
+                <th>
+                <a href="{{ path('app_user', {'sort': 'email', 'direction': (sort == 'email' and direction == 'ASC') ? 'DESC' : 'ASC'}) }}">
+                Почта
+                    {% if sort == 'email' %}
+                        {{direction == 'ASC' ? '↑' : '↓'}}
+                    {% endif %}
+                </a>
+                </th>
+                <th>
+                <a href="{{ path('app_user', {'sort': 'telegram', 'direction': (sort == 'telegram' and direction == 'ASC') ? 'DESC' : 'ASC'}) }}">
+                Telegram
+                    {% if sort == 'telegram' %}
+                        {{direction == 'ASC' ? '↑' : '↓'}}
+                    {% endif %}
+                </a>
+                </th>
+                <th>
+                <a href="{{ path('app_user', {'sort': 'address', 'direction': (sort == 'address' and direction == 'ASC') ? 'DESC' : 'ASC'}) }}">
+                Адрес
+                    {% if sort == 'address' %}
+                        {{direction == 'ASC' ? '↑' : '↓'}}
+                    {% endif %}
+                </a>
+                </th>
+                <th>Отдел</th>
+                <th>Выбор действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstName }}</td>
+                    <td>{{ user.lastName }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.status }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.telegram }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.department.id ? user.department.name : 'нет отдела' }}</td>
+                    <td>
+                        <form method="POST" action="{{ path('delete_user', {'user': user.id}) }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button>Удалить</button>
+                        </form>
+
+                        <a href="{{ path('edit_user', {'user': user.id}) }}">
+                        <button>Редактировать</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<a href="{{ path('create_user') }}">Создать пользователей</a>
+{% endblock %}
